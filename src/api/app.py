@@ -2,12 +2,23 @@ from __future__ import annotations
 
 from datetime import date
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import Depends, FastAPI, HTTPException, Query, Security
 from fastapi.responses import FileResponse
+from fastapi.security import APIKeyHeader
 
 from src.core.settings import get_settings
 from src.core.storage import export_file_for_date, latest_export_file
 from src.spiders.registry import SITE_ORDER
+
+
+API_KEY = "kL9pQ2rS4tU6vW8xY0zA1bC3dE5fG7h"
+api_key_header = APIKeyHeader(name="X-API-Key", auto_error=True)
+
+
+def verify_api_key(api_key: str = Security(api_key_header)) -> str:
+    if api_key != API_KEY:
+        raise HTTPException(status_code=401, detail="invalid api key")
+    return api_key
 
 
 def create_app() -> FastAPI:
@@ -21,6 +32,7 @@ def create_app() -> FastAPI:
     def download_export(
         site: str,
         export_date: date | None = Query(default=None, alias="date"),
+        _api_key: str = Depends(verify_api_key),
     ) -> FileResponse:
         normalized_site = site.lower()
         if normalized_site not in SITE_ORDER:
