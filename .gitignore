@@ -1,0 +1,69 @@
+# 环境变量文件
+.env
+!.env.example
+
+# 日志文件
+logs/
+*.log
+
+# Python 缓存
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache
+
+# 虚拟环境
+venv/
+env/
+.env/
+.venv/
+.python-version
+
+# IDE 配置
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 浏览器数据
+browser_data/
+
+# 测试产物
+tests/debug/*.png
+tests/debug/*.html
+tests
+
+# 数据库文件
+*.db
+*.sqlite
+data/
+
+# 构建产物
+dist/
+build/
+*.egg-info/
+
+# Claude 本地配置
+.claude/
+
+# 测试目录
+
+# 调试目录
+debug/
+
+# 本地导出数据目录（不提交）
+exported_drama_zh/
+data/
+
+# 本地导出脚本（不提交）
+scripts/auto_export_daily.py
+scripts/setup_export_task.bat
+
+# 外部爬虫数据目录（不提交）
+# D:\dev\projects\crawler-data\ 下的所有数据
+
+.codex_tmp
+
+analysis

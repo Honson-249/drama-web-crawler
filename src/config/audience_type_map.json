@@ -1,0 +1,48 @@
+{
+  "male": [
+    "action",
+    "battle",
+    "cultivation",
+    "detective",
+    "farming",
+    "gaming",
+    "general",
+    "immortal",
+    "martial",
+    "power",
+    "revenge",
+    "supernatural",
+    "urban fantasy",
+    "war",
+    "war god"
+  ],
+  "female": [
+    "all-too-late",
+    "alpha",
+    "billionaire",
+    "ceo",
+    "cheating",
+    "divorce",
+    "fated lovers",
+    "heiress",
+    "love",
+    "mafia romance",
+    "marriage",
+    "modern romance",
+    "romance",
+    "secret baby",
+    "sweet romance",
+    "tragic love",
+    "werewolf"
+  ],
+  "mixed": [
+    "family",
+    "fantasy",
+    "mystery",
+    "school",
+    "sci-fi",
+    "slice of life",
+    "suspense",
+    "thriller"
+  ]
+}
