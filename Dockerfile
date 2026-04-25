@@ -3,11 +3,17 @@
 
 FROM python:3.12-slim
 
+# Build args for proxy (pass at build time)
+ARG HTTP_PROXY
+ARG HTTPS_PROXY
+
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
-    PIP_DISABLE_PIP_VERSION_CHECK=1
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    HTTP_PROXY=${HTTP_PROXY} \
+    HTTPS_PROXY=${HTTPS_PROXY}
 
 # Install uv package manager
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
@@ -26,6 +32,7 @@ RUN uv sync --frozen --no-dev
 # Create non-root user for security
 RUN useradd --create-home --shell /bin/bash appuser
 RUN chown -R appuser:appuser /app
+RUN mkdir -p /app/logs /app/data && chown -R appuser:appuser /app/logs /app/data
 USER appuser
 
 # Expose default port
