@@ -29,12 +29,6 @@ COPY main.py ./
 # Install dependencies
 RUN uv sync --frozen --no-dev
 
-# Create non-root user for security
-RUN useradd --create-home --shell /bin/bash appuser
-RUN chown -R appuser:appuser /app
-RUN mkdir -p /app/logs /app/data && chown -R appuser:appuser /app/logs /app/data
-USER appuser
-
 # Expose default port
 EXPOSE 9000
 
