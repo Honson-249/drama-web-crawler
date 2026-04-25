@@ -3,9 +3,7 @@
 
 services:
   drama-crawler:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ghcr.io/honson-249/drama-crawler:latest
     container_name: drama-crawler-test
     restart: unless-stopped
     ports:

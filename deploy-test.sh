@@ -3,11 +3,10 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
-echo "==> pulling latest code..."
-git pull origin master
+echo "==> pulling latest image..."
+docker compose -f docker-compose.test.yml pull
 
-echo "==> rebuilding and starting containers..."
-docker compose -f docker-compose.test.yml build --pull
+echo "==> restarting containers..."
 docker compose -f docker-compose.test.yml up -d
 
 echo "==> done. verify:"
