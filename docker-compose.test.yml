@@ -6,21 +6,9 @@ services:
     image: ghcr.io/honson-249/drama-crawler:latest
     container_name: drama-crawler-test
     restart: unless-stopped
+    env_file: .env
     ports:
-      - "9000:9000"
-    environment:
-      # Server
-      - DRAMA_SERVER_PORT=9000
-      # Crawl schedule (UTC+8)
-      - DRAMA_CRAWL_HOUR=0
-      - DRAMA_CRAWL_MINUTE=0
-      # Timezone
-      - DRAMA_TIMEZONE=Asia/Shanghai
-      # HTTP settings
-      - DRAMA_HTTP_TIMEOUT=30.0
-      - DRAMA_HTTP_DELAY_SECONDS=0.5
-      - DRAMA_HTTP_MAX_RETRIES=3
-      # Volumes - persist data outside container
+      - "${DRAMA_SERVER_PORT:-9000}:9000"
     volumes:
       - ./data:/app/data
       - ./logs:/app/logs
