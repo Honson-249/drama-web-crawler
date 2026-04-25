@@ -7,7 +7,6 @@ import re
 from bs4 import BeautifulSoup
 
 from src.core.base import BaseCrawler
-from src.core.curl_http import CurlHttpClient
 from src.core.models import DramaRecord
 from src.core.normalize import clean_text, infer_audience_type, normalize_datetime, parse_count
 
@@ -18,7 +17,6 @@ class DramaBoxCrawler(BaseCrawler):
     def __init__(self, settings) -> None:
         super().__init__(settings)
         self.base_url = settings.dramabox_base_url
-        self.curl_http = CurlHttpClient(settings)
 
     def crawl(self, crawl_date: date) -> list[DramaRecord]:
         return list(self.crawl_iter(crawl_date))
@@ -57,7 +55,7 @@ class DramaBoxCrawler(BaseCrawler):
             while total_pages is None or page <= total_pages:
                 url = f"{self.base_url}/browse/{tag_id}" if page == 1 else f"{self.base_url}/browse/{tag_id}/{page}"
                 self.logger.info("  fetching page %d...", page)
-                text = self.curl_http.get(url)
+                text = self.http.get(url).text
                 next_data = self._extract_next_data(text)
                 page_props = next_data.get("props", {}).get("pageProps", {})
                 if total_pages is None:
@@ -81,7 +79,7 @@ class DramaBoxCrawler(BaseCrawler):
     def fetch_all_tag_ids(self) -> list[str]:
         """获取所有 tag ID 列表"""
         url = f"{self.base_url}/browse/0"
-        text = self.curl_http.get(url)
+        text = self.http.get(url).text
         next_data = self._extract_next_data(text)
         page_props = next_data.get("props", {}).get("pageProps", {})
 
@@ -107,7 +105,7 @@ class DramaBoxCrawler(BaseCrawler):
         return tag_ids if tag_ids else ["0"]  # 如果没有找到 tag，默认只爬 all
 
     def fetch_record(self, detail_url: str, crawl_date: date) -> DramaRecord | None:
-        text = self.curl_http.get(detail_url)
+        text = self.http.get(detail_url).text
         soup = BeautifulSoup(text, "html.parser")
         next_data = self._extract_next_data(text)
         book_info = next_data.get("props", {}).get("pageProps", {}).get("bookInfo", {})
