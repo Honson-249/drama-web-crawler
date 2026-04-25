@@ -13,7 +13,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
     HTTP_PROXY=${HTTP_PROXY} \
-    HTTPS_PROXY=${HTTPS_PROXY}
+    HTTPS_PROXY=${HTTPS_PROXY} \
+    TZ=Asia/Shanghai
 
 # Install uv package manager
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
