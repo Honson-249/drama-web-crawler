@@ -33,9 +33,5 @@ RUN uv sync --frozen --no-dev
 # Expose default port
 EXPOSE 9000
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD python -c "import httpx; httpx.get('http://localhost:9000/api/v1/healthz', timeout=5).raise_for_status()" || exit 1
-
 # Run the application
 CMD ["uv", "run", "python", "main.py"]
